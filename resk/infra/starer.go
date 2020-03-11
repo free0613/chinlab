@@ -16,6 +16,10 @@ func (s StarterContext) Props() *ini.Ini {
 	return conf.(*ini.Ini)
 }
 
+func (s StarterContext) SetProps(conf *ini.Ini) {
+	s[KeyProps] = conf
+}
+
 type Starter interface {
 	Init(StarterContext)
 
@@ -54,4 +58,8 @@ func (r *startRegister) Register(s Starter) {
 
 func (r *startRegister) AllRegister() []Starter {
 	return r.starters
+}
+
+func Register(s Starter) {
+	RegStart.Register(s)
 }
