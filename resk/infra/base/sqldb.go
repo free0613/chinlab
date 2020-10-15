@@ -1,17 +1,28 @@
 package base
 
-import . "resk.micro/infra"
+import (
+	"context"
+	"database/sql"
+	. "resk.micro/infra"
+)
 
-var databaseDbx *DBmsql
+var dbx *sql.DB
+var _mapping = new(*sql.DB)
 
-type DBmsql struct {
+type Mysql struct {
 	BaseStarter
 }
 
-func (db DBmsql) Init(s StarterContext) {
-	RegStart.Register(db)
+func GetMysqlConn(ctx context.Context) *sql.DB {
+	return dbx
 }
 
-func (db DBmsql) Start(s StarterContext) {
+func (m *Mysql) Setup(ctx StarterContext) {
+	/*	conf :=ctx.Props()
+		host, ok := conf.String("mysql.host")
+		dbx*/
+}
+
+func Entermapping() {
 
 }

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package searchuser;
+
+service SearchUser{
+  rpc Search(SearchRequest) returns (SearchResult){}
+}
+
+message SearchRequest{
+  string condition = 1;
+  map<string, SearchResult> person_num = 2;
+}
+
+message SearchResult{
+  string userinfo = 1;
+}

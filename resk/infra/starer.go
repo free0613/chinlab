@@ -36,15 +36,15 @@ type BaseStarter struct{}
 
 func (b BaseStarter) Init(StarterContext) {}
 
-func (b BaseStarter) Setup(StarterContext) {}
+func (b *BaseStarter) Setup(StarterContext) {}
 
-func (b BaseStarter) Start(StarterContext) {}
+func (b *BaseStarter) Start(StarterContext) {}
 
-func (b BaseStarter) StartBlocking() bool {
+func (b *BaseStarter) StartBlocking() bool {
 	return false
 }
 
-func (b BaseStarter) Stop(StarterContext) {}
+func (b *BaseStarter) Stop(StarterContext) {}
 
 type startRegister struct {
 	starters []Starter

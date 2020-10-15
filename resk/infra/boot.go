@@ -1,6 +1,8 @@
 package infra
 
-import "github.com/gookit/ini"
+import (
+	"github.com/gookit/ini"
+)
 
 type BootApplication struct {
 	startctx StarterContext
@@ -23,11 +25,24 @@ func (b *BootApplication) Init() {
 }
 
 func (b *BootApplication) Setup() {
-	panic("implement me")
+	for _, start := range RegStart.AllRegister() {
+		start.Setup(b.startctx)
+	}
+
 }
 
 func (b *BootApplication) Start() {
-	panic("implement me")
+	for i, start := range RegStart.AllRegister() {
+		if start.StartBlocking() {
+			if i+1 == len(RegStart.AllRegister()) {
+				start.Start(b.startctx)
+			} else {
+				go start.Start(b.startctx)
+			}
+		} else {
+			start.Start(b.startctx)
+		}
+	}
 }
 
 func (b *BootApplication) Startup() {
