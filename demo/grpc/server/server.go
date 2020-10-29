@@ -10,8 +10,7 @@ import (
 
 const port = "8818"
 
-type SearchUser struct {
-}
+type SearchUser struct{}
 
 func (user *SearchUser) Search(ctx context.Context, r *pb.SearchRequest) (*pb.SearchResult, error) {
 	fmt.Println("grpc server")

@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package searchuser;
+package pbfile;
 
 service SearchUser{
   rpc Search(SearchRequest) returns (SearchResult){}
