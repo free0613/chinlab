@@ -22,11 +22,20 @@ func Search(client pb.SearchUserClient) error {
 	return nil
 }
 
+func Taglist(client pb.TagServiceClient) error {
+	list, _ := client.GetTagList(context.Background(), &pb.GetTagListRequest{
+		Name:  "儿童",
+		State: 1,
+	})
+	log.Printf("client.GetTagList tag: %v", list.List)
+	return nil
+}
+
 func main() {
 	conn, _ := grpc.Dial(":"+port, grpc.WithInsecure())
 	defer conn.Close()
 
-	client := pb.NewSearchUserClient(conn)
+	client := pb.NewTagServiceClient(conn)
 
-	_ = Search(client)
+	_ = Taglist(client)
 }
