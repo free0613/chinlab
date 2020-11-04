@@ -3,13 +3,13 @@ package main
 import (
 	"context"
 	pb "demo.gateway.test/grpc/pbfile"
+	"encoding/json"
 	"fmt"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/reflection"
 	"google.golang.org/grpc/status"
 	"log"
 	"net/http"
@@ -21,14 +21,23 @@ const port = "8818"
 type SearchUser struct{}
 type server struct{}
 
+type Tag struct {
+	Id int64
+	Name string
+	State uint
+}
 type httpError struct {
 	Code int32 `json:"code,omitempty"`
 	Message string `json:",omitempty"`
 }
 
 func (s server) GetTagList(ctx context.Context, request *pb.GetTagListRequest) (*pb.GetTagListReply, error) {
+	tag := &pb.Tag{Id: 12,Name: "dasfsa",State: 1000000}
+	a := make([]*pb.Tag, 5)
+	a=append(a,tag)
 	return &pb.GetTagListReply{
-
+		List: a,
+		Pager: pb.Pager{}
 	}, nil
 }
 
@@ -63,7 +72,7 @@ func runHttpServer(port string) *http.ServeMux {
 func runGrpcServer(port string) *grpc.Server {
 	s := grpc.NewServer()
 	pb.RegisterTagServiceServer(s, server{})
-	reflection.Register(s)
+	//reflection.Register(s)
 	return s
 }
 
@@ -80,7 +89,7 @@ func RunServer(port string) error {
 	httpServer := runHttpServer(port)
 	rpcserver := runGrpcServer(port)
 	gateway := runGatewayServer()
-
+	runtime.HTTPError = gatewayError
 	httpServer.Handle("/", gateway)
 	return http.ListenAndServe(":" + port,grpcHandlerFunc(rpcserver,httpServer))
 
@@ -106,6 +115,14 @@ func gatewayError(ctx context.Context,_ *runtime.ServeMux,marshaler runtime.Mars
 	httperr := httpError{Code: int32(s.Code()), Message: s.Message()}
 	details:= s.Details()
 	for _,detail := range details{
-		if v,ok:= detail.(*pb)
+		if v,ok:= detail.(*pb.Error);ok{
+			httperr.Code = v.Code
+			httperr.Message = v.Message
+		}
 	}
+
+	resp, _ := json.Marshal(httperr)
+	w.Header().Set("Content-type",marshaler.ContentType())
+	w.WriteHeader(runtime.HTTPStatusFromCode(s.Code()))
+	_, _ = w.Write(resp)
 }

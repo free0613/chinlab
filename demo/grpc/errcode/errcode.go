@@ -17,3 +17,7 @@ func NewError(code int, msg string) *Error {
 	_codes[code] = msg
 	return &Error{code: code, msg: msg}
 }
+
+func (e *Error) Error() string {
+	return fmt.Sprintf("error code: %d, error msg: %s", e.code, e.msg)
+}
