@@ -27,7 +27,7 @@ func (etcdclt *EtcdStarter) Init(ctx infra.StarterContext) {
 	clt = client
 }
 
-func (etcdclt *EtcdStarter) Setup(ctx infra.StarterContext) {
+/*func (etcdclt *EtcdStarter) Setup(ctx infra.StarterContext) {
 	ticker := time.NewTicker(time.Second * time.Duration(11))
 	kv := clientv3.NewKV(clt)
 	lease := clientv3.NewLease(clt)
@@ -39,7 +39,7 @@ func (etcdclt *EtcdStarter) Setup(ctx infra.StarterContext) {
 			key := grantResponse.ID
 		}
 	}
-}
+}*/
 
 func (etcdclt *EtcdStarter) Start(ctx infra.StarterContext) {
 	panic("implement me")
