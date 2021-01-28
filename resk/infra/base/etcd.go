@@ -8,11 +8,9 @@ import (
 	"resk.micro/infra"
 )
 
-var clt *clientv3.Client.Client
-
 type EtcdStarter struct {
 	starter infra.BaseStarter
-	cli *clientv3.Client
+	cli     *clientv3.Client
 }
 
 func (etcdclt *EtcdStarter) Init(ctx infra.StarterContext) {
@@ -27,19 +25,9 @@ func (etcdclt *EtcdStarter) Init(ctx infra.StarterContext) {
 	clt = client
 }
 
-/*func (etcdclt *EtcdStarter) Setup(ctx infra.StarterContext) {
-	ticker := time.NewTicker(time.Second * time.Duration(11))
-	kv := clientv3.NewKV(clt)
-	lease := clientv3.NewLease(clt)
-	var curleaseid clientv3.LeaseID = 0
-	for  {
-		if curleaseid == 0 {
-			grantResponse, err := lease.Grant(context.TODO(), 10)
+func (etcdclt *EtcdStarter) Setup(ctx infra.StarterContext) {
 
-			key := grantResponse.ID
-		}
-	}
-}*/
+}
 
 func (etcdclt *EtcdStarter) Start(ctx infra.StarterContext) {
 	panic("implement me")
@@ -57,4 +45,3 @@ func GetEtcdClt(ctx context.Context) *clientv3.Client {
 
 	return clt
 }
-
