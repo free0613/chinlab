@@ -2,9 +2,14 @@ package main
 
 import (
 	"context"
-	pb "demo.gateway.test/grpc/pbfile"
-	"google.golang.org/grpc"
 	"log"
+
+	"demo.gateway.test/grpc/middleware"
+	pb "demo.gateway.test/grpc/pbfile"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_retry "github.com/grpc-ecosystem/go-grpc-middleware/retry"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
 )
 
 const port = "8818"
@@ -32,7 +37,25 @@ func Taglist(client pb.TagServiceClient) error {
 }
 
 func main() {
-	conn, _ := grpc.Dial(":"+port, grpc.WithInsecure())
+	var opts []grpc.DialOption
+	opts = append(opts, grpc.WithUnaryInterceptor(
+		grpc_middleware.ChainUnaryClient(middleware.CheckParms())))
+
+	opts = append(opts, grpc.WithUnaryInterceptor(
+		grpc_middleware.ChainUnaryClient(
+			grpc_retry.UnaryClientInterceptor(
+				grpc_retry.WithMax(2),
+				grpc_retry.WithCodes(
+					codes.Unknown,
+					codes.Internal,
+					codes.DeadlineExceeded,
+				),
+			),
+		),
+	))
+
+	// conn, _ := grpc.Dial(":"+port, opts...)
+	conn, _ := grpc.DialContext(context.Background(), "127.0.0.1:8818", opts...)
 	defer conn.Close()
 
 	client := pb.NewTagServiceClient(conn)

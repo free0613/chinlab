@@ -1,0 +1,24 @@
+2020-11-21 15:14:51.217	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-21 15:16:48.998	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-21 15:16:49.007	info	/usr/local/var/golang/chinlab/resk/infra/base/sqldb.go:44	connection is success,constring is
+2020-11-25 15:39:02.169	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:41:25.707	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:44:22.065	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:45:56.285	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:52:21.717	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:52:55.817	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:53:30.988	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-25 15:54:42.461	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 11:15:33.873	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 13:32:54.246	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 13:58:35.641	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 15:10:38.053	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 15:10:51.576	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 15:31:00.478	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 17:06:29.550	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 17:06:57.114	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-11-26 17:06:57.170	info	/usr/local/var/golang/chinlab/resk/infra/base/sqldb.go:44	connection is success,constring is
+2020-12-28 12:14:23.652	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-12-28 12:15:38.753	info	/usr/local/var/golang/chinlab/resk/infra/base/sqldb.go:44	connection is success,constring is
+2020-12-28 12:18:44.328	info	/usr/local/var/golang/chinlab/resk/infra/base/props.go:21	初始化配置	{"Name": "abc"}
+2020-12-28 12:18:44.356	info	/usr/local/var/golang/chinlab/resk/infra/base/sqldb.go:44	connection is success,constring is

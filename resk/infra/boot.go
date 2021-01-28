@@ -18,20 +18,20 @@ func New(conf *ini.Ini) *BootApplication {
 	return b
 }
 
-func (b *BootApplication) Init() {
+func (b *BootApplication) init() {
 	for _, start := range RegStart.AllRegister() {
 		start.Init(b.startctx)
 	}
 }
 
-func (b *BootApplication) Setup() {
+func (b *BootApplication) setup() {
 	for _, start := range RegStart.AllRegister() {
 		start.Setup(b.startctx)
 	}
 
 }
 
-func (b *BootApplication) Start() {
+func (b *BootApplication) start() {
 	for i, start := range RegStart.AllRegister() {
 		if start.StartBlocking() {
 			if i+1 == len(RegStart.AllRegister()) {
@@ -46,7 +46,7 @@ func (b *BootApplication) Start() {
 }
 
 func (b *BootApplication) Startup() {
-	b.Init()
-	b.Start()
-	b.Setup()
+	b.init()
+	b.start()
+	b.setup()
 }

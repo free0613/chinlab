@@ -34,7 +34,7 @@ type Starter interface {
 
 type BaseStarter struct{}
 
-func (b BaseStarter) Init(StarterContext) {}
+func (b *BaseStarter) Init(StarterContext) {}
 
 func (b *BaseStarter) Setup(StarterContext) {}
 
