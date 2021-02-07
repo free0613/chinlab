@@ -2,11 +2,15 @@ package base
 
 import (
 	"context"
+	"go.uber.org/zap"
+	"strings"
 	"time"
 
 	"go.etcd.io/etcd/clientv3"
 	"resk.micro/infra"
 )
+
+var clt *clientv3.Client
 
 type EtcdStarter struct {
 	starter infra.BaseStarter
@@ -41,7 +45,52 @@ func (etcdclt *EtcdStarter) Stop(ctx infra.StarterContext) {
 	panic("implement me")
 }
 
-func GetEtcdClt(ctx context.Context) *clientv3.Client {
+func RegisterToETCD(ctx context.Context, name string, addr string, ttl int64) *clientv3.Client {
+	ticker := time.NewTicker(time.Second * time.Duration(ttl))
+
+	if clt == nil {
+		client, _ := clientv3.New(clientv3.Config{
+			Endpoints:   []string{""},
+			DialTimeout: 2 * time.Second,
+		})
+		clt = client
+	}
+
+	var builder strings.Builder
+	builder.WriteString(addr)
+	builder.WriteString(name)
+	key := builder.String()
+	go func() {
+		for {
+			getResponse, err := clt.Get(context.Background(), key)
+			if err != nil {
+				logger.Fatal("register service error", zap.String("error", err.Error()))
+			} else if getResponse.Count == 0 {
+				withAlive(key, addr, ttl)
+			}
+
+			<-ticker.C
+		}
+	}()
 
 	return clt
+}
+
+func withAlive(key, addr string, ttl int64) error {
+	grantResponse, err := clt.Grant(context.Background(), ttl)
+	if err != nil {
+
+		return err
+	}
+
+	_, err = clt.Put(context.Background(), key, addr, clientv3.WithLease(grantResponse.ID))
+	if err != nil {
+		return err
+	}
+
+	_, err = clt.KeepAlive(context.Background(), grantResponse.ID)
+	if err != nil {
+		return err
+	}
+	return nil
 }
