@@ -12,6 +12,7 @@ import (
 
 var clt *clientv3.Client
 
+//EtcdStarter
 type EtcdStarter struct {
 	starter infra.BaseStarter
 	cli     *clientv3.Client
@@ -45,7 +46,7 @@ func (etcdclt *EtcdStarter) Stop(ctx infra.StarterContext) {
 	panic("implement me")
 }
 
-func RegisterToETCD(ctx context.Context, name string, addr string, ttl int64) *clientv3.Client {
+func RegisterToETCD(name string, addr string, ttl int64) *clientv3.Client {
 	ticker := time.NewTicker(time.Second * time.Duration(ttl))
 
 	if clt == nil {
@@ -67,6 +68,8 @@ func RegisterToETCD(ctx context.Context, name string, addr string, ttl int64) *c
 				logger.Fatal("register service error", zap.String("error", err.Error()))
 			} else if getResponse.Count == 0 {
 				withAlive(key, addr, ttl)
+			} else {
+
 			}
 
 			<-ticker.C
